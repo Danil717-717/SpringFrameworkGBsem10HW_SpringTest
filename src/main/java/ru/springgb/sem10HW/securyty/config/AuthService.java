@@ -35,11 +35,7 @@ public class AuthService implements UserDetailsService {
 
     private boolean login(String username, String password) {
         Optional<User> user = userRepository.findByEmail(username);
-        if (user.isPresent())
-
-//            user = userRepository.findByHashPassword(password);
-//            if (user.isPresent())
-        {
+        if (user.isPresent()) {
             return true;
         } else return false;
     }

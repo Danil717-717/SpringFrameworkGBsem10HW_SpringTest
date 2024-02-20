@@ -3,13 +3,12 @@ package ru.springgb.sem10HW.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import ru.springgb.sem10HW.model.User;
 import ru.springgb.sem10HW.service.UserService;
 
 @Controller
 public class SignInController {
 
+    @Autowired
     private final UserService userService;
 
     @Autowired
@@ -22,10 +21,4 @@ public class SignInController {
         return "signIn_user";
     }
 
-
-//    @PostMapping("/signIn")
-//    public String registerUser(User user){
-//        userService.save(user);
-//        return "users_list";
-//    }
 }

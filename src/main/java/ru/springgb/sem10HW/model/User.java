@@ -2,14 +2,16 @@ package ru.springgb.sem10HW.model;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-//@RequiredArgsConstructor
 @Data
 @Table(name = "account")
 public class User {
@@ -40,7 +42,6 @@ public class User {
 
 
     @OneToOne
-    //@JoinColumn(name = "user_id")
     @JoinTable(
             name = "user_session",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -48,17 +49,18 @@ public class User {
     private Session session;
 
 
+    public User(Long id, String name, String lastName, String email, String hashPassword) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+        this.hashPassword = hashPassword;
+    }
+
     public void addSession(Session session) {
         this.session = session;
 
     }
 
-//    public void removeTask(long taskId) {
-//        Task task = this.tasks.stream().filter(t -> t.getId() == taskId)
-//                .findFirst().orElse(null);
-//        if (task != null) {
-//            this.tasks.remove(task);
-//
-//        }
-//    }
+
 }

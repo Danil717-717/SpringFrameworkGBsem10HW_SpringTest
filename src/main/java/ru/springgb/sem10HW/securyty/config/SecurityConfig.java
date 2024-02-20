@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -15,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import ru.springgb.sem10HW.securyty.details.UserDetailsServiceImpl;
 
 
@@ -25,8 +24,13 @@ public class SecurityConfig {
     @Autowired
     @Qualifier("customUserDetailsService")
     private UserDetailsServiceImpl userDetailsService;
+
     @Autowired
     private AuthService authService;
+
+
+    @Autowired
+    private CustomLogoutHandler logoutHandler;
 
 
     @Bean
@@ -41,7 +45,10 @@ public class SecurityConfig {
                         .failureUrl("/signIn")
                         .permitAll()
                 )
-
+                .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.logoutUrl("/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
+                        .permitAll())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizationManagerRequest -> authorizationManagerRequest
@@ -69,11 +76,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
-////        return configuration.getAuthenticationManager();
-//        return (AuthenticationManager) auth.userDetailsService(authService);
-//    }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -14,6 +14,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SessionService sessionService;
     private SessionRepository sessionRepository;
 
     public User save(User user) {
@@ -54,4 +57,6 @@ public class UserService {
         user.addSession(session);
         return userRepository.save(user);
     }
+
+
 }

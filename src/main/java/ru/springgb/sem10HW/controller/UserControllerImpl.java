@@ -7,8 +7,6 @@ import ru.springgb.sem10HW.service.UserService;
 
 import java.util.List;
 
-import static ru.springgb.sem10HW.model.Role.USER;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserControllerImpl implements UserController {
