@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>users_list</title>
+</head>
+<body>
+
+        <h1>User List</h1>
+        <div>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>lastName</th>
+                    <th>email</th>
+
+                </tr>
+                <tr th:each="user:${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+
+<!--
+                    <td><a class="linkUpdate" th:href="@{/tasks/updateTask/{id}(id=${task.id})}" >Update</a></td>-->
+<!--                    <td><a class="linkDelete" th:href="@{/tasks/delete/{id}(id=${task.id})}">Delete</a></td>-->
+                </tr>
+
+            </table>
+        </div>
+</body>
+</html>
